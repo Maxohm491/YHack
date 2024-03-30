@@ -19,9 +19,13 @@ public class PlayerMovement : MonoBehaviour
     private float rocketPower = 1f;
     [SerializeField]
     private float maxFloatSpeed = 10f;
+    [SerializeField]
+    private float rotateSpeed = 3.5f;
 
-    private float currUpSpeed = 0f;
-    private float currHoriSpeed = 0f;
+    private float currGroundSpeed = 0f;
+
+    private Vector2 velocity = new();
+
 
 
     private State state;
@@ -59,11 +63,8 @@ public class PlayerMovement : MonoBehaviour
 
         if(vert == 1) {
             // lil jump
-            currUpSpeed += rocketPower * 4;
-            currHoriSpeed = -hori * groundSpeed;
-
-            Vector2 upVector = rotatedPos.normalized * currUpSpeed;
-            rotatedPos += upVector;
+            velocity = planetToShip.normalized * 7 * rocketPower;
+            rotatedPos += velocity;
         }
 
         rb.MovePosition(rotatedPos);
@@ -73,27 +74,19 @@ public class PlayerMovement : MonoBehaviour
     void FloatingMovement() {
         float vert = Input.GetAxisRaw("Vertical");
         float hori = Input.GetAxisRaw("Horizontal");
-
-        currHoriSpeed += -hori * floatSpeed;
-        currHoriSpeed = Math.Clamp(currHoriSpeed, -maxFloatSpeed, maxFloatSpeed);
-
+        
         Vector2 planetToShip = transform.position - planet.transform.position;
-        Vector2 rotatedPos = Quaternion.AngleAxis(currHoriSpeed / planetToShip.magnitude, Vector3.forward) * planetToShip;
+        Vector2 grav = planetToShip.normalized * -gravStrength;
+        velocity += grav + rocketPower * vert * (Vector2) transform.up;
 
-        currUpSpeed -= gravStrength;
-        currUpSpeed += rocketPower * vert;
-
-        Vector2 upVector = rotatedPos.normalized * currUpSpeed;
-
-        Vector2 newPos = rotatedPos + upVector;
-        rb.MovePosition(newPos);
-        transform.up = rotatedPos;
+        rb.MovePosition(velocity + (Vector2) transform.position);
+        transform.Rotate(0, 0, -rotateSpeed * hori, Space.Self);
     }
 
     void BecomeGrounded() {
         Debug.Log("grounded");
-        currUpSpeed = 0f;
-        currHoriSpeed = 0f;
+        velocity = new();
+        currGroundSpeed = 0f;
     }
 
     void OnTriggerEnter2D(Collider2D other)
