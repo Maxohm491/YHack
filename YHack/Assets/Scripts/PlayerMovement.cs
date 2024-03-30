@@ -37,8 +37,6 @@ public class PlayerMovement : MonoBehaviour
     
     void FixedUpdate()
     {
-        transform.up = transform.position - planet.transform.position;
-
         switch(state) {
             case State.Floating:
                 FloatingMovement();
@@ -47,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
                 GroundedMovement();
                 break;
         }
+
+        transform.up = transform.position - planet.transform.position;
     }
 
     void GroundedMovement() {
@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
         float hori = Input.GetAxisRaw("Horizontal");
 
         Vector2 planetToShip = transform.position - planet.transform.position;
-        Vector2 rotatedPos = Quaternion.AngleAxis(-hori * speed, Vector3.forward) * planetToShip;
+        Vector2 rotatedPos = Quaternion.AngleAxis(-hori * speed / planetToShip.magnitude, Vector3.forward) * planetToShip;
 
         if(vert == 1) {
             // lil jump
@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
         float hori = Input.GetAxisRaw("Horizontal");
 
         Vector2 planetToShip = transform.position - planet.transform.position;
-        Vector2 rotatedPos = Quaternion.AngleAxis(-hori * speed, Vector3.forward) * planetToShip;
+        Vector2 rotatedPos = Quaternion.AngleAxis(-hori * speed / planetToShip.magnitude, Vector3.forward) * planetToShip;
 
         currUpSpeed -= gravStrength;
         currUpSpeed += rocketPower * vert;
