@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,20 +7,22 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
     GameObject planet;
-
     [SerializeField]
     private Rigidbody2D rb;
-
     [SerializeField]
-    private float speed = 5f;
-
+    private float groundSpeed = 6f;
+    [SerializeField]
+    private float floatSpeed = 1f;
     [SerializeField]
     private float gravStrength = 0.5f;
-
     [SerializeField]
     private float rocketPower = 1f;
+    [SerializeField]
+    private float maxFloatSpeed = 10f;
 
     private float currUpSpeed = 0f;
+    private float currHoriSpeed = 0f;
+
 
     private State state;
 
@@ -52,11 +55,12 @@ public class PlayerMovement : MonoBehaviour
         float hori = Input.GetAxisRaw("Horizontal");
 
         Vector2 planetToShip = transform.position - planet.transform.position;
-        Vector2 rotatedPos = Quaternion.AngleAxis(-hori * speed / planetToShip.magnitude, Vector3.forward) * planetToShip;
+        Vector2 rotatedPos = Quaternion.AngleAxis(-hori * groundSpeed / planetToShip.magnitude, Vector3.forward) * planetToShip;
 
         if(vert == 1) {
             // lil jump
             currUpSpeed += rocketPower * 4;
+            currHoriSpeed = -hori * groundSpeed;
 
             Vector2 upVector = rotatedPos.normalized * currUpSpeed;
             rotatedPos += upVector;
@@ -70,8 +74,11 @@ public class PlayerMovement : MonoBehaviour
         float vert = Input.GetAxisRaw("Vertical");
         float hori = Input.GetAxisRaw("Horizontal");
 
+        currHoriSpeed += -hori * floatSpeed;
+        currHoriSpeed = Math.Clamp(currHoriSpeed, -maxFloatSpeed, maxFloatSpeed);
+
         Vector2 planetToShip = transform.position - planet.transform.position;
-        Vector2 rotatedPos = Quaternion.AngleAxis(-hori * speed / planetToShip.magnitude, Vector3.forward) * planetToShip;
+        Vector2 rotatedPos = Quaternion.AngleAxis(currHoriSpeed / planetToShip.magnitude, Vector3.forward) * planetToShip;
 
         currUpSpeed -= gravStrength;
         currUpSpeed += rocketPower * vert;
@@ -86,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
     void BecomeGrounded() {
         Debug.Log("grounded");
         currUpSpeed = 0f;
+        currHoriSpeed = 0f;
     }
 
     void OnTriggerEnter2D(Collider2D other)

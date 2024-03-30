@@ -347,7 +347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 141614774}
   planet: {fileID: 1944199128}
-  height: 4
+  height: 10
   cameraBuffer: 15
 --- !u!1 &619394800
 GameObject:
@@ -457,7 +457,7 @@ Transform:
   m_GameObject: {fileID: 1399414765}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.89, y: -0.94, z: -1}
+  m_LocalPosition: {x: 2.36, y: 4.86, z: -1}
   m_LocalScale: {x: 0.4494, y: 0.7392, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -697,9 +697,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7380165699781574601, guid: 457d5de155363b34a813818091302c12, type: 3}
+      propertyPath: speed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7380165699781574601, guid: 457d5de155363b34a813818091302c12, type: 3}
       propertyPath: planet
       value: 
       objectReference: {fileID: 1944199126}
+    - target: {fileID: 7380165699781574601, guid: 457d5de155363b34a813818091302c12, type: 3}
+      propertyPath: floatSpeed
+      value: 0.25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
