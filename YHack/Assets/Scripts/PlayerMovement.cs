@@ -45,8 +45,6 @@ public class PlayerMovement : MonoBehaviour
                 GroundedMovement();
                 break;
         }
-
-        transform.up = transform.position - planet.transform.position;
     }
 
     void GroundedMovement() {
@@ -65,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         rb.MovePosition(rotatedPos);
-
+        transform.up = rotatedPos;
     }
 
     void FloatingMovement() {
@@ -82,6 +80,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 newPos = rotatedPos + upVector;
         rb.MovePosition(newPos);
+        transform.up = rotatedPos;
     }
 
     void BecomeGrounded() {
