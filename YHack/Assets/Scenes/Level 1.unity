@@ -1754,6 +1754,14 @@ PrefabInstance:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 6200000, guid: f1eac508f401d7f4895941e823ca144a, type: 2}
+    - target: {fileID: 4871440413255749784, guid: 457d5de155363b34a813818091302c12, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 1.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871440413255749784, guid: 457d5de155363b34a813818091302c12, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 2.56
+      objectReference: {fileID: 0}
     - target: {fileID: 5612773419895569204, guid: 457d5de155363b34a813818091302c12, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1828,7 +1836,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7380165699781574601, guid: 457d5de155363b34a813818091302c12, type: 3}
       propertyPath: maxFloatSpeed
-      value: 6
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
