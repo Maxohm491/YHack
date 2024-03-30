@@ -37,14 +37,38 @@ public class PlayerMovement : MonoBehaviour
     
     void FixedUpdate()
     {
+        transform.up = transform.position - planet.transform.position;
+
         switch(state) {
             case State.Floating:
-                FloatMovement();
+                FloatingMovement();
+                break;
+            case State.Grounded:
+                GroundedMovement();
                 break;
         }
     }
 
-    void FloatMovement() {
+    void GroundedMovement() {
+        float vert = Input.GetAxisRaw("Vertical");
+        float hori = Input.GetAxisRaw("Horizontal");
+
+        Vector2 planetToShip = transform.position - planet.transform.position;
+        Vector2 rotatedPos = Quaternion.AngleAxis(-hori * speed, Vector3.forward) * planetToShip;
+
+        if(vert == 1) {
+            // lil jump
+            currUpSpeed += rocketPower * 4;
+
+            Vector2 upVector = rotatedPos.normalized * currUpSpeed;
+            rotatedPos += upVector;
+        }
+
+        rb.MovePosition(rotatedPos);
+
+    }
+
+    void FloatingMovement() {
         float vert = Input.GetAxisRaw("Vertical");
         float hori = Input.GetAxisRaw("Horizontal");
 
@@ -60,12 +84,17 @@ public class PlayerMovement : MonoBehaviour
         rb.MovePosition(newPos);
     }
 
+    void BecomeGrounded() {
+        Debug.Log("grounded");
+        currUpSpeed = 0f;
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {   
         if (other.gameObject.CompareTag("Ground"))
         {
             state = State.Grounded;
-            Debug.Log("grounded");
+            BecomeGrounded();
         }
     }
 
