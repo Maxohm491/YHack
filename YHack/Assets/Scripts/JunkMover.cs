@@ -38,4 +38,12 @@ public class JunkMover : MonoBehaviour
 
         transform.position = (Vector2) transform.position + direction.normalized * moveSpeed;
     }
+
+    void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("hit by player");
+            Destroy(transform.parent.gameObject);
+        }
+    }
 }

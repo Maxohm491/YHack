@@ -12,8 +12,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float groundSpeed = 6f;
     [SerializeField]
-    private float floatSpeed = 1f;
-    [SerializeField]
     private float gravStrength = 0.5f;
     [SerializeField]
     private float rocketPower = 1f;
@@ -22,11 +20,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float rotateSpeed = 3.5f;
 
-    private float currGroundSpeed = 0f;
-
     private Vector2 velocity = new();
-
-
 
     private State state;
 
@@ -63,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
 
         if(vert == 1) {
             // lil jump
-            velocity = planetToShip.normalized * 7 * rocketPower;
+            velocity = planetToShip.normalized * 17 * rocketPower;
             rotatedPos += velocity;
         }
 
@@ -77,7 +71,12 @@ public class PlayerMovement : MonoBehaviour
         
         Vector2 planetToShip = transform.position - planet.transform.position;
         Vector2 grav = planetToShip.normalized * -gravStrength;
-        velocity += grav + rocketPower * vert * (Vector2) transform.up;
+
+        velocity += rocketPower * vert * (Vector2) transform.up;
+        if (vert == 0) {
+            velocity = grav + velocity;
+        }
+        velocity = Vector2.ClampMagnitude(velocity, maxFloatSpeed);
 
         rb.MovePosition(velocity + (Vector2) transform.position);
         transform.Rotate(0, 0, -rotateSpeed * hori, Space.Self);
@@ -86,7 +85,6 @@ public class PlayerMovement : MonoBehaviour
     void BecomeGrounded() {
         Debug.Log("grounded");
         velocity = new();
-        currGroundSpeed = 0f;
     }
 
     void OnTriggerEnter2D(Collider2D other)
