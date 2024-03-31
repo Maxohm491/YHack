@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
     // sprites
     [SerializeField]
-    private Sprite baseSprite, leftSprite, rightSprite, noSprite;
+    private Sprite baseSprite, leftSprite, rightSprite, noSprite, leftSmallSprite, rightSmallSprite;
 
     [SerializeField]
     private Slider slider;
@@ -131,7 +131,16 @@ public class PlayerMovement : MonoBehaviour
             spriteRenderer.sprite = noSprite;
         }
 
-        if(vert == 0 && hori !=0) {
+        if(vert == 0 && hori != 0) 
+        {
+            if (hori > 0)
+            {
+                spriteRenderer.sprite = leftSmallSprite; 
+            }
+            else if(hori < 0)
+            {
+                spriteRenderer.sprite = rightSmallSprite;
+            }
             fuel -= 0.4f;
         }
     }
