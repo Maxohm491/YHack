@@ -8,6 +8,9 @@ TagManager:
   - Junk
   - Barrier
   - ForceField
+  - Repel
+  - Pull
+  - Push
   layers:
   - Default
   - TransparentFX

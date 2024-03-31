@@ -43,6 +43,10 @@ public class PlayerController : MonoBehaviour
 
     private GameObject forceField;
 
+    private GameObject pull;
+
+    private GameObject push;
+
     private float fuel;
 
     private Vector2 velocity = new();
@@ -69,6 +73,8 @@ public class PlayerController : MonoBehaviour
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         state = State.Floating;
         forceField = transform.GetChild(0).gameObject;
+        push = transform.GetChild(1).gameObject;
+        pull = transform.GetChild(2).gameObject;
         fuel = maxFuel;
         ppState = PushPullState.None;
     }
@@ -121,15 +127,21 @@ public class PlayerController : MonoBehaviour
 
     void HandlePushPull() {
         if(Input.GetKey(KeyCode.Z) && fuel > 0) {
+            pull.SetActive(true);
+            push.SetActive(false);
             ppState = PushPullState.Pulling;
             fuel -= 0.25f;
         }
         else if (Input.GetKey(KeyCode.X) && fuel > 0) {
+            push.SetActive(true);
+            pull.SetActive(false);
             ppState = PushPullState.Pushing;
             fuel -= 0.25f;
         }
         else {
             ppState = PushPullState.None;
+            pull.SetActive(false);
+            push.SetActive(false);
         }
     }
 
