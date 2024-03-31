@@ -23,11 +23,4 @@ public class JunkOrbiter : MonoBehaviour
         Vector2 rotatedPos = Quaternion.AngleAxis(speed / dist, Vector3.forward) * transform.position;
         rb.MovePosition(rotatedPos);
     }
-
-    void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Ground"))
-        {
-            Destroy(gameObject);
-        }
-    }
 }

@@ -21,6 +21,19 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float rotateSpeed = 3.5f;
 
+    // sprites
+    [SerializeField]
+    private Sprite baseSprite;
+    [SerializeField]
+    private Sprite leftSprite;
+    [SerializeField]
+    private Sprite rightSprite;
+    [SerializeField]
+    private Sprite noSprite;
+
+    private SpriteRenderer spriteRenderer;
+
+
     private Vector2 velocity = new();
 
     private State state;
@@ -31,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         state = State.Floating;
     }
@@ -83,12 +97,29 @@ public class PlayerMovement : MonoBehaviour
 
         rb.MovePosition(velocity + (Vector2) transform.position);
         transform.Rotate(0, 0, -rotateSpeed * hori, Space.Self);
+
+        if(vert != 0) {
+            if(hori == 0) {
+                spriteRenderer.sprite = baseSprite;
+            }
+            else if (hori == 1) {
+                spriteRenderer.sprite = leftSprite;
+            }
+            else {
+                spriteRenderer.sprite = rightSprite;
+            }
+        }
+        else {
+            spriteRenderer.sprite = noSprite;
+        }
     }
 
     void BecomeGrounded() 
     {
         Debug.Log("grounded");
         velocity = new();
+
+        spriteRenderer.sprite = noSprite;
 
         Vector2 planetToShip = transform.position - planet.transform.position;
         if(Vector2.Angle(planetToShip, transform.up) > 75) 
@@ -115,6 +146,13 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("floating");
         }
 
+    }
+
+    void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.CompareTag("Junk"))
+        {
+            Destroy(collision.gameObject);
+        }
     }
 
     private void OnDisable()

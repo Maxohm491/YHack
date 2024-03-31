@@ -42,10 +42,5 @@ public class JunkShaker : MonoBehaviour
         rb.MovePosition((Vector2) transform.position + direction.normalized * moveSpeed);
     }
 
-    void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Ground"))
-        {
-            Destroy(transform.parent.gameObject);
-        }
-    }
+    
 }

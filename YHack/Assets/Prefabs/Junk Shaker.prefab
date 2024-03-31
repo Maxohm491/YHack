@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 89337593396013312}
   m_Layer: 0
   m_Name: Junk
-  m_TagString: Untagged
+  m_TagString: Junk
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 7482188500031990288}
   m_Layer: 0
   m_Name: Junk Shaker
-  m_TagString: Untagged
+  m_TagString: Junk
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
