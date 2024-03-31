@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
     private Sprite baseSprite, leftSprite, rightSprite, noSprite;
 
     [SerializeField]
-    private TextMeshProUGUI fuelText;
+    private Slider slider;
 
     private SpriteRenderer spriteRenderer;
 
@@ -111,6 +111,7 @@ public class PlayerMovement : MonoBehaviour
 
         rb.MovePosition(velocity + (Vector2) transform.position);
 
+        // Graphics and fuel updates
         if(vert != 0 && fuel > 0) {
             fuel = Math.Max(0, fuel-1);
             if(hori == 0) {
@@ -126,10 +127,14 @@ public class PlayerMovement : MonoBehaviour
         else {
             spriteRenderer.sprite = noSprite;
         }
-    }
 
+        if(vert == 0 && hori !=0) {
+            fuel -= 0.4f;
+        }
+    }
+    
     void UpdateFuelDisplay() {
-        fuelText.text = "Fuel: " + fuel.ToString();
+        slider.value = fuel/maxFuel * slider.maxValue;
     }
 
     void BecomeGrounded() 
