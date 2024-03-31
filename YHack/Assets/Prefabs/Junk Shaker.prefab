@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   junkPoint: {fileID: 7482188500031990288}
-  speed: 2
-  moveSpeed: 0.005
+  speed: 4
+  moveSpeed: 1.5
   maxRadius: 3
   rb: {fileID: 89337593396013312}
 --- !u!70 &1631990008130315922
