@@ -120,6 +120,6 @@ public class AudioController : MonoBehaviour
 
     public void PlaySFX(AudioClip clip)
     {
-        musicSource.PlayOneShot(clip);
+        pushSource.PlayOneShot(clip);
     }
 }
