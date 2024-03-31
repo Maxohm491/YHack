@@ -154,12 +154,13 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Junk"))
         {
             Destroy(collision.gameObject);
+            asteroidsDestroyed++;
         }
     }
 
     private void OnDisable()
     {
-        
+        PlayerPrefs.SetInt("asteroidsDestroyed", asteroidsDestroyed);
         PlayerPrefs.SetString("sceneName", SceneManager.GetActiveScene().name);
     } 
 }
