@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -23,13 +24,11 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 velocity = new();
 
     private State state;
-
     enum State {
         Grounded,
         Floating
     }
 
-    // Update is called once per frame
     void Start()
     {
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -38,7 +37,8 @@ public class PlayerMovement : MonoBehaviour
     
     void FixedUpdate()
     {
-        switch(state) {
+        switch(state) 
+        {
             case State.Floating:
                 FloatingMovement();
                 break;
@@ -48,15 +48,16 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void GroundedMovement() {
+    void GroundedMovement() 
+    {
         float vert = Input.GetAxisRaw("Vertical");
         float hori = Input.GetAxisRaw("Horizontal");
 
         Vector2 planetToShip = transform.position - planet.transform.position;
         Vector2 rotatedPos = Quaternion.AngleAxis(-hori * groundSpeed / planetToShip.magnitude, Vector3.forward) * planetToShip;
 
-        if(vert == 1) {
-            // lil jump
+        if(vert == 1) 
+        {
             velocity = planetToShip.normalized * 17 * rocketPower;
             rotatedPos += velocity;
         }
@@ -65,7 +66,8 @@ public class PlayerMovement : MonoBehaviour
         transform.up = rotatedPos;
     }
 
-    void FloatingMovement() {
+    void FloatingMovement() 
+    {
         float vert = Input.GetAxisRaw("Vertical");
         float hori = Input.GetAxisRaw("Horizontal");
         
@@ -73,7 +75,8 @@ public class PlayerMovement : MonoBehaviour
         Vector2 grav = planetToShip.normalized * -gravStrength;
 
         velocity += rocketPower * vert * (Vector2) transform.up;
-        if (vert == 0) {
+        if (vert == 0) 
+        {
             velocity = grav + velocity;
         }
         velocity = Vector2.ClampMagnitude(velocity, maxFloatSpeed);
@@ -82,16 +85,16 @@ public class PlayerMovement : MonoBehaviour
         transform.Rotate(0, 0, -rotateSpeed * hori, Space.Self);
     }
 
-    void BecomeGrounded() {
+    void BecomeGrounded() 
+    {
         Debug.Log("grounded");
         velocity = new();
 
         Vector2 planetToShip = transform.position - planet.transform.position;
-        if(Vector2.Angle(planetToShip, transform.up) > 110) {
+        if(Vector2.Angle(planetToShip, transform.up) > 75) 
+        {
             Debug.Log("crashed");
-
-            // Temporary: end game
-            Destroy(this);
+            SceneManager.LoadSceneAsync("GameOver");
         }
     }
 
@@ -113,4 +116,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+
+    private void OnDisable()
+    {
+        PlayerPrefs.SetString("sceneName", SceneManager.GetActiveScene().name);
+    } 
 }
