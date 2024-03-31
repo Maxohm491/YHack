@@ -85,6 +85,14 @@ public class PlayerMovement : MonoBehaviour
     void BecomeGrounded() {
         Debug.Log("grounded");
         velocity = new();
+
+        Vector2 planetToShip = transform.position - planet.transform.position;
+        if(Vector2.Angle(planetToShip, transform.up) > 110) {
+            Debug.Log("crashed");
+
+            // Temporary: end game
+            Destroy(this);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
