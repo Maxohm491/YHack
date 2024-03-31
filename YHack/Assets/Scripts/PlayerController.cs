@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Collider2D forceFieldColl;
 
+
     private SpriteRenderer spriteRenderer;
 
     private GameObject forceField;
@@ -88,6 +89,7 @@ public class PlayerController : MonoBehaviour
         fuel = maxFuel;
         ppState = PushPullState.None;
         startTime = Time.time;
+        audioController.StartMusic();
     }
     
     void FixedUpdate()
@@ -130,9 +132,11 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKey(KeyCode.LeftShift) && fuel > 0) {
             forceField.SetActive(true);
             fuel -= 0.5f;
+            audioController.PlayForcefield = true;
         }
         else {
             forceField.SetActive(false);
+            audioController.PlayForcefield = false;
         }
     }
 
@@ -142,17 +146,23 @@ public class PlayerController : MonoBehaviour
             push.SetActive(false);
             ppState = PushPullState.Pulling;
             fuel -= 0.25f;
+            audioController.PlayPull = true;
+            audioController.PlayPush = false;
         }
         else if (Input.GetKey(KeyCode.X) && fuel > 0) {
             push.SetActive(true);
             pull.SetActive(false);
             ppState = PushPullState.Pushing;
             fuel -= 0.25f;
+            audioController.PlayPull = false;
+            audioController.PlayPush = true;
         }
         else {
             ppState = PushPullState.None;
             pull.SetActive(false);
             push.SetActive(false);
+            audioController.PlayPull = false;
+            audioController.PlayPush = false;
         }
     }
 
@@ -207,6 +217,8 @@ public class PlayerController : MonoBehaviour
             }
             fuel -= 0.4f;
         }
+
+        audioController.PlayEngine = (vert != 0 || hori !=0) && fuel > 0;
     }
     
     void UpdateFuelDisplay() {
@@ -222,6 +234,9 @@ public class PlayerController : MonoBehaviour
         {
             Crashed();
         }
+        else {
+            audioController.PlaySFX(audioController.land);
+        }
         velocity = new();
         transform.up = planetToShip;
         Vector2 shadow = planetToShip.normalized * (planetRadius + (bottomOfShip/2));
@@ -234,6 +249,9 @@ public class PlayerController : MonoBehaviour
 
     void Crashed() {
         Debug.Log("crashed");
+        audioController.PlaySFX(audioController.destroyed);
+        audioController.StopAll();
+
         PlayerPrefs.SetString("time", TimeSpan.FromSeconds((double) Time.time - startTime).ToString("mm\\:ss"));
 
         SceneManager.LoadSceneAsync("GameOver");
@@ -265,6 +283,7 @@ public class PlayerController : MonoBehaviour
                 Destroy(collision.gameObject);
                 debrisDestroyed++;
                 spawner.SpawnRandom();
+                audioController.PlaySFX(audioController.killedJunk);
             }
             else if (collision.otherCollider == shipColl){
                 Crashed();

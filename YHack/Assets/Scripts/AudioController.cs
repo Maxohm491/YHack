@@ -4,18 +4,36 @@ using UnityEngine;
 
 public class AudioController : MonoBehaviour
 {
+    // Looping sounds
     [SerializeField] 
-    AudioSource musicSource;
-    [SerializeField]
-    AudioSource SFXSource;
+    AudioSource musicSource, engineSource, pullSource, pushSource, fieldSource;
 
-    public AudioClip bg;
-    public AudioClip destroyed;
-    public AudioClip engine;
-    public AudioClip enginestart;
-    public AudioClip ffUP;
-    public AudioClip land;
-    public AudioClip pushandpull;
+    // One shot sounds
+    public AudioClip bg, destroyed, ffUP, land, pushandpull, killedJunk;
+
+    private bool playingEngine = false;
+    public bool PlayEngine {
+        set { ChangeEngine(value); }
+        get { return playingEngine; }
+    }
+
+    private bool playingField = false;
+    public bool PlayForcefield {
+        set { ChangeField(value); }
+        get { return playingField; }
+    }
+
+    private bool playingPull = false;
+    public bool PlayPull {
+        set { ChangePull(value); }
+        get { return playingPull; }
+    }
+
+    private bool playingPush = false;
+    public bool PlayPush {
+        set { ChangePush(value); }
+        get { return PlayPush; }
+    }
 
     private void Awake()
     {
@@ -25,12 +43,83 @@ public class AudioController : MonoBehaviour
     private void Start()
     {
         musicSource.clip = bg;
-        musicSource.volume = (float)0.35; 
+        musicSource.volume = (float)0.23; 
+    }
+
+    public void StartMusic() {
         musicSource.Play();
+    }
+
+    private void ChangeEngine(bool newState) {
+        if(playingEngine == newState) {
+            return;
+        }
+
+        playingEngine = newState;
+
+        if(playingEngine) {
+            engineSource.Play();
+        }
+        else {
+            engineSource.Stop();
+        }
+    }
+
+    private void ChangeField(bool newState) {
+        if(playingField == newState) {
+            return;
+        }
+
+        playingField = newState;
+
+        if(playingField) {
+            fieldSource.Play();
+        }
+        else {
+            fieldSource.Stop();
+        }
+    }
+
+    private void ChangePull(bool newState) {
+        if(playingPull == newState) {
+            return;
+        }
+
+        playingPull = newState;
+
+        if(playingPull) {
+            pullSource.Play();
+        }
+        else {
+            pullSource.Stop();
+        }
+    }
+
+    private void ChangePush(bool newState) {
+        if(playingPush == newState) {
+            return;
+        }
+
+        playingPush = newState;
+
+        if(playingPush) {
+            pushSource.Play();
+        }
+        else {
+            pushSource.Stop();
+        }
+    }
+
+    public void StopAll() {
+        PlayEngine = false;
+        PlayPull = false;
+        PlayPush = false;
+        PlayForcefield = false;
+        musicSource.Stop();
     }
 
     public void PlaySFX(AudioClip clip)
     {
-        SFXSource.PlayOneShot(clip);
+        musicSource.PlayOneShot(clip);
     }
 }

@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6022180523880238296
 Transform:
   m_ObjectHideFlags: 0
@@ -101,7 +101,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9143215786304528714
 Transform:
   m_ObjectHideFlags: 0
@@ -255,6 +255,7 @@ Transform:
   m_Children:
   - {fileID: 9143215786304528714}
   - {fileID: 3691478175111286967}
+  - {fileID: 6022180523880238296}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4312749915452277734
@@ -422,6 +423,7 @@ MonoBehaviour:
   slider: {fileID: 0}
   shipColl: {fileID: 0}
   forceFieldColl: {fileID: 0}
+  spawner: {fileID: 0}
 --- !u!1 &5989017866470971187
 GameObject:
   m_ObjectHideFlags: 0
