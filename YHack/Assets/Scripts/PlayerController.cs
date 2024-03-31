@@ -174,7 +174,7 @@ public class PlayerController : MonoBehaviour
             spriteRenderer.sprite = noSprite;
         }
 
-        if(vert == 0 && hori != 0) 
+        if(vert == 0 && hori != 0 && fuel > 0) 
         {
             if (hori > 0)
             {
