@@ -722,6 +722,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7482188500031990288, guid: 91497b09ed352744aa36594d8c4672ab, type: 3}
   m_PrefabInstance: {fileID: 563188750}
   m_PrefabAsset: {fileID: 0}
+--- !u!60 &609964899 stripped
+PolygonCollider2D:
+  m_CorrespondingSourceObject: {fileID: 4871440413255749784, guid: 457d5de155363b34a813818091302c12, type: 3}
+  m_PrefabInstance: {fileID: 7986674842303132163}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1800,6 +1805,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c8c3537df5d9a64288579bc18d21c2e, type: 3}
+--- !u!60 &1506017740 stripped
+PolygonCollider2D:
+  m_CorrespondingSourceObject: {fileID: 740985423355258569, guid: 457d5de155363b34a813818091302c12, type: 3}
+  m_PrefabInstance: {fileID: 7986674842303132163}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1534868135
 GameObject:
   m_ObjectHideFlags: 0
@@ -2724,9 +2734,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1852936924}
     - target: {fileID: 7380165699781574601, guid: 457d5de155363b34a813818091302c12, type: 3}
-      propertyPath: fuelText
-      value: 
+      propertyPath: maxFuel
+      value: 300
       objectReference: {fileID: 0}
+    - target: {fileID: 7380165699781574601, guid: 457d5de155363b34a813818091302c12, type: 3}
+      propertyPath: shipColl
+      value: 
+      objectReference: {fileID: 609964899}
     - target: {fileID: 7380165699781574601, guid: 457d5de155363b34a813818091302c12, type: 3}
       propertyPath: baseSprite
       value: 
@@ -2740,21 +2754,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 44444ec9a1e1847489453b21cbb2e721, type: 3}
     - target: {fileID: 7380165699781574601, guid: 457d5de155363b34a813818091302c12, type: 3}
-      propertyPath: rocketPower
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 7380165699781574601, guid: 457d5de155363b34a813818091302c12, type: 3}
-      propertyPath: rotateSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7380165699781574601, guid: 457d5de155363b34a813818091302c12, type: 3}
-      propertyPath: planetRadius
-      value: 12.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7380165699781574601, guid: 457d5de155363b34a813818091302c12, type: 3}
-      propertyPath: maxFloatSpeed
-      value: 0.2
-      objectReference: {fileID: 0}
+      propertyPath: forceFieldColl
+      value: 
+      objectReference: {fileID: 1506017740}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

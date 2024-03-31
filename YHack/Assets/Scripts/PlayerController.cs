@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     GameObject planet;
@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float rotateSpeed = 3.5f;
     [SerializeField]
-    private float maxFuel = 100f;
+    private float maxFuel = 300f;
     [SerializeField]
     private float planetRadius = 12.5f;
     private float bottomOfShip = 0.865f;
@@ -34,8 +34,14 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     private Slider slider;
+    [SerializeField]
+    private Collider2D shipColl;
+    [SerializeField]
+    private Collider2D forceFieldColl;
 
     private SpriteRenderer spriteRenderer;
+
+    private GameObject forceField;
 
     private float fuel;
 
@@ -47,6 +53,14 @@ public class PlayerMovement : MonoBehaviour
         Floating
     }
 
+    private PushPullState ppState;
+    public PushPullState PPState { get{ return ppState; } }
+    public enum PushPullState {
+        None,
+        Pushing,
+        Pulling
+    }
+
     private int debrisDestroyed = 0;
 
     void Start()
@@ -54,7 +68,9 @@ public class PlayerMovement : MonoBehaviour
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         state = State.Floating;
+        forceField = transform.GetChild(0).gameObject;
         fuel = maxFuel;
+        ppState = PushPullState.None;
     }
     
     void FixedUpdate()
@@ -66,10 +82,13 @@ public class PlayerMovement : MonoBehaviour
                 break;
             case State.Grounded:
                 GroundedMovement();
+                fuel = maxFuel;
                 break;
         }
 
         UpdateFuelDisplay();
+        HandleForceField();
+        HandlePushPull();
     }
 
     void GroundedMovement() 
@@ -88,6 +107,30 @@ public class PlayerMovement : MonoBehaviour
 
         rb.MovePosition(rotatedPos);
         transform.up = rotatedPos;
+    }
+
+    void HandleForceField() {
+        if(Input.GetKey(KeyCode.LeftShift) && fuel > 0) {
+            forceField.SetActive(true);
+            fuel -= 0.5f;
+        }
+        else {
+            forceField.SetActive(false);
+        }
+    }
+
+    void HandlePushPull() {
+        if(Input.GetKey(KeyCode.Z) && fuel > 0) {
+            ppState = PushPullState.Pulling;
+            fuel -= 0.25f;
+        }
+        else if (Input.GetKey(KeyCode.X) && fuel > 0) {
+            ppState = PushPullState.Pushing;
+            fuel -= 0.25f;
+        }
+        else {
+            ppState = PushPullState.None;
+        }
     }
 
     void FloatingMovement() 
@@ -156,8 +199,7 @@ public class PlayerMovement : MonoBehaviour
 
         if(Vector2.Angle(planetToShip, transform.up) > 75) 
         {
-            Debug.Log("crashed");
-            SceneManager.LoadSceneAsync("GameOver");
+            Crashed();
         }
         velocity = new();
         transform.up = planetToShip;
@@ -167,6 +209,11 @@ public class PlayerMovement : MonoBehaviour
         spriteRenderer.sprite = noSprite;
 
         fuel = maxFuel;
+    }
+
+    void Crashed() {
+        Debug.Log("crashed");
+        SceneManager.LoadSceneAsync("GameOver");
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -191,10 +238,16 @@ public class PlayerMovement : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("Junk"))
         {
-            Destroy(collision.gameObject);
-            debrisDestroyed++;
+            if(collision.otherCollider == forceFieldColl) {
+                Destroy(collision.gameObject);
+                debrisDestroyed++;
+            }
+            else if (collision.otherCollider == shipColl){
+                Crashed();
+            }
         }
     }
+
 
     private void OnDisable()
     {
