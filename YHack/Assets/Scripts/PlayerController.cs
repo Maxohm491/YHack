@@ -29,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
         Floating
     }
 
+    private int asteroidsDestroyed = 0;
+
     void Start()
     {
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -119,6 +121,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDisable()
     {
+        
         PlayerPrefs.SetString("sceneName", SceneManager.GetActiveScene().name);
     } 
 }
