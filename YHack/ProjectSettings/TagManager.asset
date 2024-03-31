@@ -8,6 +8,7 @@ TagManager:
   - Junk
   - Barrier
   - ForceField
+  - AudioManager
   - Repel
   - Pull
   - Push

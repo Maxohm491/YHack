@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -30,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
     // sprites
     [SerializeField]
-    private Sprite baseSprite, leftSprite, rightSprite, noSprite, leftSmallSprite, rightSmallSprite;
+    private Sprite baseSprite, leftSprite, rightSprite, noSprite, leftSmallSprite, rightSmallSprite, pullSprite, pushSprite;
 
     [SerializeField]
     private Slider slider;
@@ -42,6 +39,8 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     private GameObject forceField;
+
+    AudioController audioController;
 
     private GameObject pull;
 
@@ -66,6 +65,11 @@ public class PlayerController : MonoBehaviour
     }
 
     private int debrisDestroyed = 0;
+
+    void Awake()
+    {
+        audioController = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioController>();
+    }
 
     void Start()
     {
@@ -155,8 +159,6 @@ public class PlayerController : MonoBehaviour
 
         if(fuel > 0) {
             velocity += rocketPower * vert * (Vector2) transform.up;
-            
-
             transform.Rotate(0, 0, -rotateSpeed * hori, Space.Self);
         }
 
