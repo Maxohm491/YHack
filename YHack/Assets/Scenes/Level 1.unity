@@ -911,7 +911,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4876dd9d7c91a2c458c5477f3881eeff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NumEdges: 120
+  NumEdges: 40
   Radius: 1
 --- !u!68 &680689156
 EdgeCollider2D:
