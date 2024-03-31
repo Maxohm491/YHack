@@ -189,7 +189,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerPrefs.SetInt("asteroidsDestroyed", debrisDestroyed);
+        PlayerPrefs.SetInt("debrisDestroyed", debrisDestroyed);
         PlayerPrefs.SetString("sceneName", SceneManager.GetActiveScene().name);
     } 
 }
