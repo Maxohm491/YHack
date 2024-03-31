@@ -8,7 +8,7 @@ public class ScoreCount : MonoBehaviour
     void Start()
     {
         TextMeshProUGUI score = GetComponent<TextMeshProUGUI>();
-        string scoreString = PlayerPrefs.GetInt("asteroidsDestroyed", 0).ToString();
-        score.text = $"Asteroids Destroyed: {scoreString}";
+        string scoreString = PlayerPrefs.GetInt("Debris Destroyed", 0).ToString();
+        score.text = $"Debris Destroyed: {scoreString}";
     }
 }
