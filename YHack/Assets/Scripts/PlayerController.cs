@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -46,6 +43,8 @@ public class PlayerController : MonoBehaviour
 
     private GameObject forceField;
 
+    AudioController audioController;
+
     private float fuel;
 
     private Vector2 velocity = new();
@@ -68,6 +67,11 @@ public class PlayerController : MonoBehaviour
     }
 
     private int debrisDestroyed = 0;
+
+    void Awake()
+    {
+        audioController = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioController>();
+    }
 
     void Start()
     {
@@ -150,8 +154,6 @@ public class PlayerController : MonoBehaviour
 
         if(fuel > 0) {
             velocity += rocketPower * vert * (Vector2) transform.up;
-            
-
             transform.Rotate(0, 0, -rotateSpeed * hori, Space.Self);
         }
 
