@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3019647784259081370}
   - component: {fileID: 4871440413255749784}
   - component: {fileID: 7380165699781574601}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -187,7 +187,9 @@ MonoBehaviour:
   rocketPower: 0.008
   maxFloatSpeed: 0.1
   rotateSpeed: 3
+  maxFuel: 100
   baseSprite: {fileID: 21300000, guid: 4a71e7100d580504c820d5fb20287f85, type: 3}
   leftSprite: {fileID: 21300000, guid: 312d72faf14d8c44b8e4d4e6bbd9a8d6, type: 3}
   rightSprite: {fileID: 21300000, guid: 95cc9a8d7175ba7409601a918c14999f, type: 3}
   noSprite: {fileID: 21300000, guid: 8d3fa95021dd1ea4895a07db33c79ee8, type: 3}
+  fuelText: {fileID: 0}
