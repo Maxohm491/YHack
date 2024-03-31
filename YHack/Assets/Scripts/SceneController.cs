@@ -15,6 +15,12 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadSceneAsync("Level 1");
     }
 
+    public void LoadInfinite()
+    {   
+        Debug.Log("Loading infinite");
+        SceneManager.LoadSceneAsync("Infinite Scene");
+    }
+
     public void QuitGame()
     {
         Application.Quit();
