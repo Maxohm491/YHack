@@ -1231,7 +1231,7 @@ PrefabInstance:
     - target: {fileID: 6758212064270781578, guid: 3c0e8cd2aeffe1743ac0a1de14f459b1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1290322719}
+      objectReference: {fileID: 1131291181}
     - target: {fileID: 6758212064270781578, guid: 3c0e8cd2aeffe1743ac0a1de14f459b1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
@@ -1259,6 +1259,18 @@ PrefabInstance:
     - target: {fileID: 6758212064270781578, guid: 3c0e8cd2aeffe1743ac0a1de14f459b1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6758212064270781578, guid: 3c0e8cd2aeffe1743ac0a1de14f459b1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6758212064270781578, guid: 3c0e8cd2aeffe1743ac0a1de14f459b1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6758212064270781578, guid: 3c0e8cd2aeffe1743ac0a1de14f459b1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6758212064270781578, guid: 3c0e8cd2aeffe1743ac0a1de14f459b1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -2696,7 +2708,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1131291182
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3597,7 +3609,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1900981034
 RectTransform:
   m_ObjectHideFlags: 0
