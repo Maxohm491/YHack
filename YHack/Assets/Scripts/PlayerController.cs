@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
         Floating
     }
 
-    private int asteroidsDestroyed = 0;
+    private int debrisDestroyed = 0;
 
     void Start()
     {
@@ -177,13 +177,13 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Junk"))
         {
             Destroy(collision.gameObject);
-            asteroidsDestroyed++;
+            debrisDestroyed++;
         }
     }
 
     private void OnDisable()
     {
-        PlayerPrefs.SetInt("asteroidsDestroyed", asteroidsDestroyed);
+        PlayerPrefs.SetInt("asteroidsDestroyed", debrisDestroyed);
         PlayerPrefs.SetString("sceneName", SceneManager.GetActiveScene().name);
     } 
 }

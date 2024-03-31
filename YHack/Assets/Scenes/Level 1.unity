@@ -2549,15 +2549,15 @@ PrefabInstance:
     - target: {fileID: 7380165699781574601, guid: 457d5de155363b34a813818091302c12, type: 3}
       propertyPath: baseSprite
       value: 
-      objectReference: {fileID: 21300000, guid: e520ea0545588b24dbf4964e8fc25c3c, type: 3}
+      objectReference: {fileID: 21300000, guid: c48e123395f7fe14d8bd50218038772e, type: 3}
     - target: {fileID: 7380165699781574601, guid: 457d5de155363b34a813818091302c12, type: 3}
       propertyPath: leftSprite
       value: 
-      objectReference: {fileID: 21300000, guid: 4ab5b37f25080064ab4f73cae05a40e9, type: 3}
+      objectReference: {fileID: 21300000, guid: 31073a872042c5843bcf1569619b70d1, type: 3}
     - target: {fileID: 7380165699781574601, guid: 457d5de155363b34a813818091302c12, type: 3}
       propertyPath: rightSprite
       value: 
-      objectReference: {fileID: 21300000, guid: 002d7c1fe6df4084b98d5d1338ee0164, type: 3}
+      objectReference: {fileID: 21300000, guid: 44444ec9a1e1847489453b21cbb2e721, type: 3}
     - target: {fileID: 7380165699781574601, guid: 457d5de155363b34a813818091302c12, type: 3}
       propertyPath: rocketPower
       value: 0.01
