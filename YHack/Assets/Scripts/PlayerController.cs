@@ -28,6 +28,9 @@ public class PlayerController : MonoBehaviour
     private float planetRadius = 12.5f;
     private float bottomOfShip = 0.865f;
 
+    private float startTime;
+
+
     // sprites
     [SerializeField]
     private Sprite baseSprite, leftSprite, rightSprite, noSprite, leftSmallSprite, rightSmallSprite, pullSprite, pushSprite;
@@ -46,6 +49,9 @@ public class PlayerController : MonoBehaviour
     private float fuel;
 
     private Vector2 velocity = new();
+
+    [SerializeField]
+    private Spawner spawner;
 
     private State state;
     enum State {
@@ -71,6 +77,7 @@ public class PlayerController : MonoBehaviour
         forceField = transform.GetChild(0).gameObject;
         fuel = maxFuel;
         ppState = PushPullState.None;
+        startTime = Time.time;
     }
     
     void FixedUpdate()
@@ -213,6 +220,8 @@ public class PlayerController : MonoBehaviour
 
     void Crashed() {
         Debug.Log("crashed");
+        PlayerPrefs.SetString("time", TimeSpan.FromSeconds((double) Time.time - startTime).ToString("mm\\:ss"));
+
         SceneManager.LoadSceneAsync("GameOver");
     }
 
@@ -241,6 +250,7 @@ public class PlayerController : MonoBehaviour
             if(collision.otherCollider == forceFieldColl) {
                 Destroy(collision.gameObject);
                 debrisDestroyed++;
+                spawner.SpawnRandom();
             }
             else if (collision.otherCollider == shipColl){
                 Crashed();
