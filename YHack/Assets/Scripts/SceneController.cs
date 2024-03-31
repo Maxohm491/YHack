@@ -14,11 +14,6 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
-    public void LoadSceneByName(string sceneName)
-    {
-        SceneManager.LoadSceneAsync(sceneName);
-    }
-
     public void QuitGame()
     {
         Application.Quit();
