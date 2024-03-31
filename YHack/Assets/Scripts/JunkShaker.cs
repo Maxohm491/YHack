@@ -15,7 +15,7 @@ public class JunkShaker : MonoBehaviour
     [SerializeField]
     private float pullSpeed = 150f;
     [SerializeField]
-    private float pullRadius = 6f;
+    private float pullRadius = 9f;
     [SerializeField]
     private Rigidbody2D rb;
 
@@ -47,9 +47,8 @@ public class JunkShaker : MonoBehaviour
 
         Vector2 direction = target + (Vector2) junkPoint.position - (Vector2) transform.position;
 
-        // rb.MovePosition((Vector2) transform.position + direction.normalized * moveSpeed);
+        rb.MovePosition((Vector2) transform.position + direction.normalized * moveSpeed);
 
-        rb.velocity = direction.normalized * moveSpeed;
         CheckPushPull();
     }
 

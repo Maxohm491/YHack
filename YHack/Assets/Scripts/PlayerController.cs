@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
 
     // sprites
     [SerializeField]
-    private Sprite baseSprite, leftSprite, rightSprite, noSprite, leftSmallSprite, rightSmallSprite;
+    private Sprite baseSprite, leftSprite, rightSprite, noSprite, leftSmallSprite, rightSmallSprite, pullSprite, pushSprite;
 
     [SerializeField]
     private Slider slider;
