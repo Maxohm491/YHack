@@ -9,9 +9,9 @@ public class SceneController : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
     }
-    public void LoadNextScene()
+    public void LoadFisrtLevel()
     {   
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadSceneAsync("Level 1");
     }
 
     public void QuitGame()

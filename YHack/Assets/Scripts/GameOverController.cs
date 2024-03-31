@@ -7,7 +7,6 @@ public class GameOverController : MonoBehaviour
 {
     public void LoadSceneByName(string sceneName)
     {
-        Debug.Log("Button!");
         SceneManager.LoadSceneAsync(sceneName);
     }
 }
