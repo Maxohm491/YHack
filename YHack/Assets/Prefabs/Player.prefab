@@ -159,12 +159,12 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 1.0608761, y: -0.41871604}
-      - {x: 0.6685185, y: 0.8586759}
-      - {x: 0.0062793363, y: 1.3219076}
+      - {x: 0.6371218, y: 0.8523969}
+      - {x: 0, y: 1.3219076}
       - {x: -0.6562188, y: 0.85448825}
       - {x: -1.0698476, y: -0.42738324}
       - {x: -1.0902568, y: -0.8582914}
-      - {x: 0.20063683, y: -0.8594003}
+      - {x: 1.0985807, y: -0.86567926}
       - {x: 0.6653074, y: -0.86567974}
       - {x: 1.0714185, y: -0.8681588}
   m_UseDelaunayMesh: 0
@@ -188,8 +188,9 @@ MonoBehaviour:
   maxFloatSpeed: 0.1
   rotateSpeed: 3
   maxFuel: 100
+  planetRadius: 12.5
   baseSprite: {fileID: 21300000, guid: 4a71e7100d580504c820d5fb20287f85, type: 3}
   leftSprite: {fileID: 21300000, guid: 312d72faf14d8c44b8e4d4e6bbd9a8d6, type: 3}
   rightSprite: {fileID: 21300000, guid: 95cc9a8d7175ba7409601a918c14999f, type: 3}
   noSprite: {fileID: 21300000, guid: 8d3fa95021dd1ea4895a07db33c79ee8, type: 3}
-  fuelText: {fileID: 0}
+  slider: {fileID: 0}
