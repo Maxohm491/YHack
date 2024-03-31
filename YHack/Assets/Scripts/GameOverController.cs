@@ -5,8 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class GameOverController : MonoBehaviour
 {
-    public void LoadSceneByName(string sceneName)
+    public void LoadMenu()
     {
-        SceneManager.LoadSceneAsync(sceneName);
+        SceneManager.LoadSceneAsync("Menu");
+    }
+
+    public void LoadPreviousLevel()
+    {
+        SceneManager.LoadSceneAsync(PlayerPrefs.GetString("sceneName"));
     }
 }
