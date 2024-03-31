@@ -2664,6 +2664,10 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7380165699781574601, guid: 457d5de155363b34a813818091302c12, type: 3}
+      propertyPath: planetRadius
+      value: 12.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7380165699781574601, guid: 457d5de155363b34a813818091302c12, type: 3}
       propertyPath: maxFloatSpeed
       value: 0.2
       objectReference: {fileID: 0}

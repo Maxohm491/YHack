@@ -24,6 +24,9 @@ public class PlayerMovement : MonoBehaviour
     private float rotateSpeed = 3.5f;
     [SerializeField]
     private float maxFuel = 100f;
+    [SerializeField]
+    private float planetRadius = 12.5f;
+    private float bottomOfShip = 0.865f;
 
     // sprites
     [SerializeField]
@@ -148,6 +151,9 @@ public class PlayerMovement : MonoBehaviour
             SceneManager.LoadSceneAsync("GameOver");
         }
         velocity = new();
+        transform.up = planetToShip;
+        Vector2 shadow = planetToShip.normalized * (planetRadius + (bottomOfShip/2));
+        transform.position = new Vector3(shadow.x, shadow.y, -1);
 
         spriteRenderer.sprite = noSprite;
 
