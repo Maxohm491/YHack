@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3453e202bd9fea1429b2740523e43b11, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dd400b36197564c43aa822e8fe7c4601, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -149,7 +149,6 @@ GameObject:
   - component: {fileID: 3019647784259081370}
   - component: {fileID: 4871440413255749784}
   - component: {fileID: 7380165699781574601}
-  - component: {fileID: 2499344243607895982}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -336,15 +335,3 @@ MonoBehaviour:
   slider: {fileID: 0}
   shipColl: {fileID: 0}
   forceFieldColl: {fileID: 0}
---- !u!114 &2499344243607895982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5612773419895569204}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4ef5826815c285458eeeb0846832203, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
