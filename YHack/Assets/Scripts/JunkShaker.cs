@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JunkMover : MonoBehaviour
+public class JunkShaker : MonoBehaviour
 {
     [SerializeField]
     private Transform junkPoint;
@@ -12,6 +12,8 @@ public class JunkMover : MonoBehaviour
     private float moveSpeed = 0.01f;
     [SerializeField]
     private float maxRadius = 3f;
+    [SerializeField]
+    private Rigidbody2D rb;
 
     private Vector2 target;
     private float time = 0;
@@ -36,13 +38,12 @@ public class JunkMover : MonoBehaviour
 
         Vector2 direction = target + (Vector2) junkPoint.position - (Vector2) transform.position;
 
-        transform.position = (Vector2) transform.position + direction.normalized * moveSpeed;
+        rb.MovePosition((Vector2) transform.position + direction.normalized * moveSpeed);
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Ground"))
         {
-            Debug.Log("hit by player");
             Destroy(transform.parent.gameObject);
         }
     }
