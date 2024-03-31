@@ -101,8 +101,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   junkPoint: {fileID: 7482188500031990288}
   speed: 4
-  moveSpeed: 1.5
+  moveSpeed: 0.04
   maxRadius: 3
+  pullSpeed: 150
+  pullRadius: 6
   rb: {fileID: 89337593396013312}
 --- !u!70 &1631990008130315922
 CapsuleCollider2D:
