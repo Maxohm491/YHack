@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -20,19 +22,19 @@ public class PlayerMovement : MonoBehaviour
     private float maxFloatSpeed = 10f;
     [SerializeField]
     private float rotateSpeed = 3.5f;
+    [SerializeField]
+    private float maxFuel = 100f;
 
     // sprites
     [SerializeField]
-    private Sprite baseSprite;
+    private Sprite baseSprite, leftSprite, rightSprite, noSprite;
+
     [SerializeField]
-    private Sprite leftSprite;
-    [SerializeField]
-    private Sprite rightSprite;
-    [SerializeField]
-    private Sprite noSprite;
+    private TextMeshProUGUI fuelText;
 
     private SpriteRenderer spriteRenderer;
 
+    private float fuel;
 
     private Vector2 velocity = new();
 
@@ -49,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         state = State.Floating;
+        fuel = maxFuel;
     }
     
     void FixedUpdate()
@@ -62,6 +65,8 @@ public class PlayerMovement : MonoBehaviour
                 GroundedMovement();
                 break;
         }
+
+        UpdateFuelDisplay();
     }
 
     void GroundedMovement() 
@@ -84,23 +89,30 @@ public class PlayerMovement : MonoBehaviour
 
     void FloatingMovement() 
     {
-        float vert = Input.GetAxisRaw("Vertical");
+        float vert = Math.Max(Input.GetAxisRaw("Vertical"), 0); // Remove back movement
         float hori = Input.GetAxisRaw("Horizontal");
         
         Vector2 planetToShip = transform.position - planet.transform.position;
         Vector2 grav = planetToShip.normalized * -gravStrength;
 
-        velocity += rocketPower * vert * (Vector2) transform.up;
-        if (vert == 0) 
+        if(fuel > 0) {
+            velocity += rocketPower * vert * (Vector2) transform.up;
+            
+
+            transform.Rotate(0, 0, -rotateSpeed * hori, Space.Self);
+        }
+
+        if (vert == 0 || fuel <= 0) 
         {
             velocity = grav + velocity;
         }
+ 
         velocity = Vector2.ClampMagnitude(velocity, maxFloatSpeed);
 
         rb.MovePosition(velocity + (Vector2) transform.position);
-        transform.Rotate(0, 0, -rotateSpeed * hori, Space.Self);
 
-        if(vert != 0) {
+        if(vert != 0 && fuel > 0) {
+            fuel = Math.Max(0, fuel-1);
             if(hori == 0) {
                 spriteRenderer.sprite = baseSprite;
             }
@@ -116,19 +128,25 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void UpdateFuelDisplay() {
+        fuelText.text = "Fuel: " + fuel.ToString();
+    }
+
     void BecomeGrounded() 
     {
         Debug.Log("grounded");
-        velocity = new();
-
-        spriteRenderer.sprite = noSprite;
-
         Vector2 planetToShip = transform.position - planet.transform.position;
+
         if(Vector2.Angle(planetToShip, transform.up) > 75) 
         {
             Debug.Log("crashed");
             SceneManager.LoadSceneAsync("GameOver");
         }
+        velocity = new();
+
+        spriteRenderer.sprite = noSprite;
+
+        fuel = maxFuel;
     }
 
     void OnTriggerEnter2D(Collider2D other)
