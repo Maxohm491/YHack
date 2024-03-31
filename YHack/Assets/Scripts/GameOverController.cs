@@ -5,9 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class GameOverController : MonoBehaviour
 {
+    AudioController audioController;
+
     public void LoadMenu()
     {
         SceneManager.LoadSceneAsync("Menu");
+    }
+
+    public void Start() {
+        audioController = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioController>();
+        audioController.StopAll();
     }
 
     public void LoadPreviousLevel()
