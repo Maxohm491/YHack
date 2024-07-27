@@ -3,20 +3,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Orbiter
 {
-    [SerializeField]
-    GameObject planet;
-    [SerializeField]
-    private Rigidbody2D rb;
     [SerializeField]
     private float groundSpeed = 6f;
     [SerializeField]
-    private float gravStrength = 0.5f;
+    private float gravStrength = 0.2f;
     [SerializeField]
     private float rocketPower = 1f;
     [SerializeField]
-    private float maxFloatSpeed = 10f;
+    private float maxFloatSpeed = 7f;
     [SerializeField]
     private float rotateSpeed = 3.5f;
     [SerializeField]
@@ -51,8 +47,6 @@ public class PlayerController : MonoBehaviour
     private GameObject push;
 
     private float fuel;
-
-    private Vector2 velocity = new();
 
     [SerializeField]
     private Spawner spawner;
@@ -118,14 +112,15 @@ public class PlayerController : MonoBehaviour
         Vector2 planetToShip = transform.position - planet.transform.position;
         Vector2 rotatedPos = Quaternion.AngleAxis(-hori * groundSpeed / planetToShip.magnitude, Vector3.forward) * planetToShip;
 
-        if(vert == 1) 
-        {
-            velocity = planetToShip.normalized * 17 * rocketPower;
-            rotatedPos += velocity;
-        }
-
         rb.MovePosition(rotatedPos);
         transform.up = rotatedPos;
+
+        if(vert == 1) 
+        {
+            velocity = new(0, 17 * rocketPower); 
+            UpdatePosition();
+        }
+
     }
 
     void HandleForceField() {
@@ -171,22 +166,23 @@ public class PlayerController : MonoBehaviour
         float vert = Math.Max(Input.GetAxisRaw("Vertical"), 0); // Remove back movement
         float hori = Input.GetAxisRaw("Horizontal");
         
-        Vector2 planetToShip = transform.position - planet.transform.position;
-        Vector2 grav = planetToShip.normalized * -gravStrength;
-
         if(fuel > 0) {
-            velocity += rocketPower * vert * (Vector2) transform.up;
+            velocity += ToLocal(rocketPower * vert * transform.up);
             transform.Rotate(0, 0, -rotateSpeed * hori, Space.Self);
         }
 
-        if (vert == 0 || fuel <= 0) 
+        if (vert != 1 || fuel <= 0) 
         {
-            velocity = grav + velocity;
+            velocity.y -= gravStrength;
         }
  
-        velocity = Vector2.ClampMagnitude(velocity, maxFloatSpeed);
+        velocity.x = Math.Clamp(velocity.x, -maxFloatSpeed, maxFloatSpeed);
+        velocity.y = Math.Clamp(velocity.y, -maxFloatSpeed, maxFloatSpeed);
 
-        rb.MovePosition(velocity + (Vector2) transform.position);
+        print(velocity);
+
+
+        UpdatePosition();
 
         // Graphics and fuel updates
         if(vert != 0 && fuel > 0) {

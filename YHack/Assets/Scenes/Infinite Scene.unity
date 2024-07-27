@@ -2805,6 +2805,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 695262520f0407e4096d0eadf45518a3, type: 3}
     - target: {fileID: 7380165699781574601, guid: 457d5de155363b34a813818091302c12, type: 3}
+      propertyPath: gravStrength
+      value: 0.0015
+      objectReference: {fileID: 0}
+    - target: {fileID: 7380165699781574601, guid: 457d5de155363b34a813818091302c12, type: 3}
       propertyPath: forceFieldColl
       value: 
       objectReference: {fileID: 1506017740}
