@@ -8,17 +8,17 @@ public class PlayerController : Orbiter
     [SerializeField]
     private float groundSpeed = 6f;
     [SerializeField]
-    private float gravStrength = 0.2f;
+    private float gravStrength = 0.0015f;
     [SerializeField]
-    private float rocketPower = 1f;
+    private float rocketPower = 0.008f;
     [SerializeField]
-    private float maxFloatSpeed = 7f;
+    private float maxFloatSpeed = 0.1f;
     [SerializeField]
-    private float rotateSpeed = 3.5f;
+    private float rotateSpeed = 5f;
     [SerializeField]
     private float maxFuel = 300f;
     [SerializeField]
-    private float planetRadius = 12.5f;
+    private float planetRadius = 6f;
     private float bottomOfShip = 0.865f;
 
     private float startTime;
@@ -173,7 +173,7 @@ public class PlayerController : Orbiter
 
         if (vert != 1 || fuel <= 0) 
         {
-            velocity.y -= gravStrength;
+            // velocity.y -= gravStrength;
         }
  
         velocity.x = Math.Clamp(velocity.x, -maxFloatSpeed, maxFloatSpeed);
