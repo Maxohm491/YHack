@@ -12,6 +12,7 @@ TagManager:
   - Repel
   - Pull
   - Push
+  - Planet
   layers:
   - Default
   - TransparentFX

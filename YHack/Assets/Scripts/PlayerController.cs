@@ -3,37 +3,28 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PlayerController : Orbiter
+public class PlayerController : MultiplanetOrbiter
 {
-    [SerializeField]
-    private float groundSpeed = 6f;
-    [SerializeField]
-    private float gravStrength = 0.0015f;
-    [SerializeField]
-    private float rocketPower = 0.008f;
-    [SerializeField]
-    private float maxFloatSpeed = 0.1f;
-    [SerializeField]
-    private float rotateSpeed = 5f;
-    [SerializeField]
-    private float maxFuel = 300f;
-    [SerializeField]
-    private float planetRadius = 6f;
+    
+    [SerializeField] private float groundSpeed = 6f;
+    [SerializeField] private float gravStrength = 0.0015f;
+    [SerializeField] private float rocketPower = 0.008f;
+    [SerializeField] private float maxFloatSpeed = 0.1f;
+    [SerializeField] private float rotateSpeed = 5f;
+    [SerializeField] private float maxFuel = 300f;
+    
+
     private float bottomOfShip = 0.865f;
 
     private float startTime;
 
 
     // sprites
-    [SerializeField]
-    private Sprite baseSprite, leftSprite, rightSprite, noSprite, leftSmallSprite, rightSmallSprite, pullSprite, pushSprite;
+    [SerializeField] private Sprite baseSprite, leftSprite, rightSprite, noSprite, leftSmallSprite, rightSmallSprite, pullSprite, pushSprite;
 
-    [SerializeField]
-    private Slider slider;
-    [SerializeField]
-    private Collider2D shipColl;
-    [SerializeField]
-    private Collider2D forceFieldColl;
+    [SerializeField] private Slider slider;
+    [SerializeField] private Collider2D shipColl;
+    [SerializeField] private Collider2D forceFieldColl;
 
 
     private SpriteRenderer spriteRenderer;
@@ -67,9 +58,17 @@ public class PlayerController : Orbiter
 
     private int debrisDestroyed = 0;
 
-    void Awake()
+    new void Awake()
     {
-        audioController = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioController>();
+        base.Awake();
+
+        try {
+            audioController = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioController>();
+        }
+        catch {
+            Debug.LogError("No audio controller found");
+        }
+        
     }
 
     void Start()
@@ -110,14 +109,14 @@ public class PlayerController : Orbiter
         float hori = Input.GetAxisRaw("Horizontal");
 
         Vector2 planetToShip = transform.position - planet.transform.position;
-        Vector2 rotatedPos = Quaternion.AngleAxis(-hori * groundSpeed / planetToShip.magnitude, Vector3.forward) * planetToShip;
+        Vector2 rotatedPos = Quaternion.AngleAxis(-hori * groundSpeed / planetToShip.magnitude, Vector3.forward) * planetToShip.normalized * (planetRadius + (bottomOfShip/2));
 
-        rb.MovePosition(rotatedPos);
+        rb.MovePosition(rotatedPos + (Vector2) planet.transform.position);
         transform.up = rotatedPos;
 
         if(vert == 1) 
         {
-            velocity = new(0, 17 * rocketPower); 
+            velocity = 17 * rocketPower * planetToShip.normalized; 
             UpdatePosition();
         }
 
@@ -167,17 +166,17 @@ public class PlayerController : Orbiter
         float hori = Input.GetAxisRaw("Horizontal");
         
         if(fuel > 0) {
-            velocity += ToLocal(rocketPower * vert * transform.up);
+            velocity += rocketPower * vert * (Vector2) transform.up;
             transform.Rotate(0, 0, -rotateSpeed * hori, Space.Self);
         }
 
         if (vert != 1 || fuel <= 0) 
         {
-            // velocity.y -= gravStrength;
+            Vector2 planetToShip = transform.position - planet.transform.position;
+            velocity += -gravStrength * planetToShip.normalized;
         }
  
-        velocity.x = Math.Clamp(velocity.x, -maxFloatSpeed, maxFloatSpeed);
-        velocity.y = Math.Clamp(velocity.y, -maxFloatSpeed, maxFloatSpeed);
+        velocity = Vector2.ClampMagnitude(velocity, maxFloatSpeed);
 
         print(velocity);
 
@@ -236,7 +235,7 @@ public class PlayerController : Orbiter
         velocity = new();
         transform.up = planetToShip;
         Vector2 shadow = planetToShip.normalized * (planetRadius + (bottomOfShip/2));
-        transform.position = new Vector3(shadow.x, shadow.y, -1);
+        transform.position = new Vector3(shadow.x, shadow.y, -1) + planet.transform.position;
 
         spriteRenderer.sprite = noSprite;
 
@@ -255,6 +254,7 @@ public class PlayerController : Orbiter
 
     void OnTriggerEnter2D(Collider2D other)
     {   
+        print(other.gameObject.tag);
         if (other.gameObject.CompareTag("Ground"))
         {
             state = State.Grounded;
